@@ -1,0 +1,62 @@
+<!DOCTYPE html>        <!--  documento html5  --> 
+<html lang="it">    
+	<head>         
+		<meta charset="UTF-8" />         
+		<title>  Esercizio 20  </title>
+		<link rel="stylesheet" href="index.css" />
+		<script type="application/javascript"  src="index.js" ></script>
+	</head>    
+	<body>  
+		<div id="wrapper">
+			<form method="post" name="registr" onSubmit="return validaForm();">
+				COGNOME:
+				<input type="text" name="cognome" size="40" maxlength="40">
+				<br>
+				NOME:
+				<input type="text" id="nome" size="30" maxlength="30">
+				<br>
+				MATRICOLA:
+				<input type="text" name="matricola" size="12" maxlength="12">
+				<br>
+				REGIONE:
+				<select name="regione">
+					<option value="nessuna" selected></option>
+					<option value="valdaosta">Val d’Aosta</option>
+					<option value="piemonte">Piemonte</option>
+					<option value="liguria">Liguria</option>
+					<option value="lombardia">Lombardia</option>
+					<option value="veneto">Veneto</option>
+					<option value="trentino">Trentino Alto Adige</option>
+					<option value="friuli">Friuli Venezia-Giulia</option>
+					<option value="emilia">Emilia-Romagna</option>
+					<option value="toscana">Toscana</option>
+					<option value="marche">Marche</option>
+					<option value="umbria">Umbria</option>
+					<option value="lazio">Lazio</option>
+					<option value="abruzzo">Abruzzo</option>
+					<option value="molise">Molise</option>
+					<option value="campania">Campania</option>
+					<option value="basilicata">Basilicata</option>
+					<option value="puglia">Puglia</option>
+					<option value="calabria">Calabria</option>
+					<option value="sicilia">Sicilia</option>
+					<option value="sardegna">Sardegna</option>
+				</select>
+				<br/>
+				eMail:
+				<input type="text" name="email" size="30" maxlength="30">
+				<br>
+				TELEFONO:
+				<input type="text" name="tel" size="15" maxlength="15">
+				<br>
+				RICHIESTE PARTICOLARI:
+				<br>
+				<textarea name="richiesta" cols="60" rows="12"></textarea>
+				<div class="buttons">
+					<input type="submit" value="INVIA">
+					<input type="reset" value="RESET">
+				</div>
+			</form>
+		</div>
+	</body> 
+</html>  

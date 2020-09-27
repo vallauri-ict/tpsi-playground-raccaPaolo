@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Background Image</title>
+    <link rel="stylesheet" href="index.css"/>
+    <script type="text/javascript" src="index.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <p> Seleziona una immagine
+        <select id="lstImmagini" onchange="cambiaImmagine(this.value)" >//.value
+            <option value="0">Img1</option>
+            <option value="1">Img2</option>
+            <option value="2">Img3</option>
+            <option value="3">Img4</option>
+        </select>
+    </p>
+    <div id="imgBox"> </div> <br>
+
+    <p> Seleziona una immagine </p>
+    1 <input type="radio" name="opt" value="0" checked> <br>
+    2 <input type="radio" name="opt" value="1"> <br>
+    3 <input type="radio" name="opt" value="2"> <br>
+    4 <input type="radio" name="opt" value="3"> <br>
+
+    <p> Effetto RollOver </p>
+    <div id="imgRoll" onmouseover="rollOn()" onmouseout="rollOff()" onclick="alert('ok')"> cliccami </div>
+
+</div>
+</body>
+</html>

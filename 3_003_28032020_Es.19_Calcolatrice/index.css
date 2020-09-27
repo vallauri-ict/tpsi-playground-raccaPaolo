@@ -1,0 +1,41 @@
+html{
+    height: 90%;
+    background-color: #777;
+}
+body{
+    height: 90%;
+    margin: 0px;
+    background-color: #777;
+    overflow: hidden;
+}
+#wrapper{
+    width: 900px;
+    height: 100%;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid black;
+    box-shadow: 0 0 20px 7px black;
+}
+
+#wrapper>div{
+	width:260px;
+	margin:0 auto;
+}
+
+#wrapper *{
+    padding: 10px;
+}
+input{
+    height: 50px;
+    width: 50px;
+    margin: 5px;
+}
+#txtDisplay{
+    width: 220px;
+    text-align: right;
+    font-size: 20pt;
+}
+#btnRis{
+    width: 240px;
+}

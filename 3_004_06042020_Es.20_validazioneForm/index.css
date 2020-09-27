@@ -1,0 +1,33 @@
+html, body{
+    background-color: aquamarine;
+	text-align: center;
+}
+#wrapper{
+	width: 800px;
+	border: 1px solid black;
+	margin: 20px auto;
+	background-color: white;
+	box-shadow: 0 0 20px 7px black;
+    padding:30px;
+    text-align: left;
+}       
+input{
+	border: none;
+	border-bottom: 1px solid darkgray;
+}
+input,select,textarea{
+	min-height: 30px;
+	min-width: 100px;
+	margin: 10px auto;
+}
+
+.buttons>input{
+    margin-top: 30px;
+	box-sizing: content-box;
+	font-size: larger;
+	border: 2px solid lightgray;
+}
+
+.red-border{
+    border-bottom: 1px solid red;
+}
