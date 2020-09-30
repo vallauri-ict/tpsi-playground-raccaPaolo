@@ -32,18 +32,26 @@ th, td{
 th{
     color: red;
 }
-
-#divLibroCorrente{
+.dettagli{
     background-color: white;
     display: grid;
-    width: fit-content;
+    width: 400px;
     grid-template-columns: 140px auto;
+    /*altezza di ogni riga*/
     grid-template-rows: 40px 40px 40px 40px 40px 40px;
 	grid-column-gap:5px;
     grid-row-gap:5px;
     margin: 10px auto;
     border: 1px solid black;
 }
-#divLibroCorrente > *{
+/*> * indica tag contenuti da tag che implementano la classe dettagli*/
+.dettagli > *{
     line-height: 40px;
+    overflow: auto;
+}
+
+.pulsantiNavigazione{
+    margin: 10px auto;
+    width: 300px;
+    text-align: center;
 }
