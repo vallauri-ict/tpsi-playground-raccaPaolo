@@ -8,15 +8,20 @@ window.onload = function(){
     let _lstNazioni=document.getElementById("lstNazioni");
     _lstNazioni.addEventListener("change",caricaTabella);
     let recordEliminati=[];
-
+    //volendo si potrebbe fare json con dentro i 3 array, per poter accedere semplicemente con pos
+    let nazioni=[];
+    let contEliminati=[];
+    let contNazioni=[];
+    
+    ordinaJson();
+    creaVettoreNazioniECont();
     caricaLst();
     caricaIntestazioni();
     caricaTabella();
 
-    //*******************funzioni***************************//
 
-    function caricaLst(){
-        let nazioni=[];
+    //*******************funzioni***************************//
+    function ordinaJson(){
         //ordino json in base a nazioni
         json.results.sort(function(record1, record2) {
             let str1 = record1.nat.toUpperCase();
@@ -27,13 +32,32 @@ window.onload = function(){
             return 1;
             else return 0;
             }); 
+    }
+
+    function creaVettoreNazioniECont(){
         //creo vettore nazioni
         for(let i=0;i<json.results.length;i++){
             if(!nazioni.includes(json.results[i].nat)){
                 nazioni.push(json.results[i].nat);
+                let cont=0;
+                for (const item of json.results) {
+                    if(item.nat==nazioni[nazioni.length-1]){
+                        cont++;
+                    }
+                }
+                contNazioni.push(cont);
             }
         }
+        //inizializzo a 0 per incremento con ++;
+        for (let i = 0; i < nazioni.length; i++) {
+            contEliminati[i]=0;            
+        }
         console.log(nazioni);
+        console.log(contNazioni);
+    }
+
+    function caricaLst(){
+        _lstNazioni.innerHTML='<option value="tutti"> tutti </option>';
 
         //carico listbox
         for (const item of nazioni) {
@@ -128,6 +152,22 @@ window.onload = function(){
     function eliminaRecord(){
         _divDettagli.innerHTML="";
         recordEliminati.push(this.idItem);
+        let i=0;
+        for (i=0;i<json.results.length;i++) {
+            if(json.results[i].login.username==this.idItem){
+                break;
+            }
+        }
+        let pos=nazioni.indexOf(json.results[i].nat);
+        contEliminati[pos]++;
+        console.log(contEliminati);
+        if(contEliminati[pos]==contNazioni[pos]){
+            nazioni.splice(pos,1);
+            contEliminati.splice(pos,1);
+            contNazioni.splice(pos,1);
+            _lstNazioni.selectedIndex=0;
+            caricaLst();
+        }
         caricaTabella();
     }
 }
