@@ -3,6 +3,8 @@
 window.onload = function(){
     let _thead=document.getElementById("thead");
     let _tbody=document.getElementById("tbody");
+    let _table=this.document.getElementById("table");
+    _table.style.overflow="hidden";
     let _divDettagli=document.getElementById("dettagli");
     _divDettagli.style.lineHeight="0";//per evitare fuoriuscita da div dettagli
     let _lstNazioni=document.getElementById("lstNazioni");
