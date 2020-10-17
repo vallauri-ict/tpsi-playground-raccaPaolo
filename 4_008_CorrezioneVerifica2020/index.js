@@ -6,15 +6,10 @@ let larghezze = ["50px", "310px", "60px", "40px", "40px"];
 window.onload=function()
 {
     let _radioWrapper=this.document.getElementById("radioWrapper");
-    let _mainWrapper=document.getElementById("mainWrapper")
     let _table=document.getElementById("table");
     let _dettagliWrapper=document.getElementById("dettagliWrapper");
+    let categoria="Breakfast";
     caricaRadioBtn();
-    let _radioBtnVet=document.getElementsByName("category");
-    console.log(_radioBtnVet);
-    _radioBtnVet[0].checked=true;
-
-
     caricaTabella();
 
 
@@ -22,85 +17,75 @@ window.onload=function()
     //*********************functions**************************/
     
     function caricaRadioBtn() {
-        _radioWrapper.innerHTML="";
-        console.log
-
-    for (const key in categoryList) {
-        console.log(key)
-        let _radioBtn=document.createElement("input");
-        _radioBtn.type="radio";
-        _radioBtn.name="category";
-        _radioBtn.value=key;
-        _radioWrapper.appendChild(_radioBtn);
-        _radioBtn.addEventListener("click",caricaTabella);
-        let _span=document.createElement("span");
-        _span.innerHTML=key;
-        _radioWrapper.appendChild(_span);
-        let _br=document.createElement("br");
-        _radioWrapper.appendChild(_br);
-    }
-
-
-    }
-
-    function cercaSelectedRadio() {
-        let i=0;
-        for (i=0;i<_radioBtnVet.length;i++) {
-            if(_radioBtnVet[i].checked){
-                break;
+        for (const key in categoryList) {//for in per scorrere chiavi di un vettore associativo
+            let _radioBtn=document.createElement("input");
+            _radioBtn.type="radio";
+            _radioBtn.name="category";
+            _radioBtn.value=key;
+            _radioWrapper.appendChild(_radioBtn);
+            _radioBtn.addEventListener("click", function(){
+                categoria=this.value;
+                caricaTabella();
+            });
+            let _span=document.createElement("span");
+            _span.innerHTML=key;
+            _radioWrapper.appendChild(_span);
+            let _br=document.createElement("br");
+            _radioWrapper.appendChild(_br);
+            if(key=="Breakfast"){
+                _radioBtn.checked=true;
             }
         }
-        return i;
     }
 
     function caricaTabella() {
         _table.innerHTML="";
         creaIntestazione();
-        let pos=_radioBtnVet[cercaSelectedRadio()].value;
-        for (let i = 0; i < categoryList[pos].length; i++) {
+        for (const item of categoryList[categoria]) {
             let _tr=document.createElement("tr");
-
+            
+            //idMeal
             let _td=document.createElement("td");
-            _td.innerHTML=categoryList[pos][i].idMeal;
+            _td.innerHTML=item.idMeal;
             _tr.appendChild(_td);
 
+            ///strMeal
             _td=document.createElement("td");
-            _td.innerHTML=categoryList[pos][i].strMeal;
+            _td.innerHTML=item.strMeal;
             _tr.appendChild(_td)
-
+            
+            //strMealThumb
             _td=document.createElement("td");
             let _img=document.createElement("img");
-            _img.src=categoryList[pos][i].strMealThumb;
+            _img.src=item.strMealThumb;
             _img.style.width="55px";
-            _img.idItem=categoryList[pos][i].idMeal;
+            _img.idMeal=item.idMeal;
             _img.addEventListener("click",mostraVideo);
-            _tr.appendChild(_img);
+            _td.appendChild(_img);
             _tr.appendChild(_td);
 
+            //lente
             _td=document.createElement("td");
             _img=document.createElement("img");
             _img.src="img/lente.jpg";
-            _img.idItem=categoryList[pos][i].idMeal;
-            _img.nome=categoryList[pos][i].strMeal;
-            _img.addEventListener("click",visualizzaDettagli);
             _img.style.width="30px";
-            _tr.appendChild(_img);
+            _img.idMeal=item.idMeal;
+            _img.nome=item.strMeal;
+            _img.addEventListener("click",visualizzaDettagli);
+            _td.appendChild(_img);
             _tr.appendChild(_td);
 
+            //elimina
             _td=document.createElement("td");
             _img=document.createElement("img");
             _img.src="img/delete.png";
-            _img.categoria=pos;
-            _img.posizione=i;
-            _img.addEventListener("click",eliminaElemento);
             _img.style.width="30px";
-            _tr.appendChild(_img);
+            _img.idMeal=item.idMeal;
+            _img.addEventListener("click",eliminaElemento);
+            _td.appendChild(_img);
             _tr.appendChild(_td);
 
-
-            
             _table.appendChild(_tr);
-            
         }
     }
     
@@ -116,34 +101,31 @@ window.onload=function()
     }
 
     function visualizzaDettagli() {
-        _dettagliWrapper.innerHTML="";
-        let _p=document.createElement("p");
-        _p.innerHTML="<b>"+this.nome+"</b> ";
-
-        for (let i = 0; i < details.meals.length; i++) {
-            if(details.meals[i].meals[0].idMeal==this.idItem){
-                _p.innerHTML+=details.meals[i].meals[0].strInstructions;
+        for (const item of details.meals) {
+            let meal=item.meals[0];
+            if (meal.idMeal==this.idMeal) {
+                _dettagliWrapper.innerHTML="<b>"+meal.strMeal+"</b> "+meal.strInstructions;
                 break;
             }
-            
         }
-        _dettagliWrapper.appendChild(_p);
-
     }
     function eliminaElemento() {
-        categoryList[this.categoria].splice(this.posizione,1);
-
+        let item=categoryList[categoria];
+        for (let i=0;i<item.length;i++) {
+            if(categoryList[categoria][i].idMeal==this.idMeal){
+                item.splice(i,1);
+                break;
+            }
+        }
         caricaTabella();
     }
     function mostraVideo() {
-        for (let i = 0; i < details.meals.length; i++) {
-            if(details.meals[i].meals[0].idMeal==this.idItem){
-                window.open(details.meals[i].meals[0].strYoutube, "Video");
+        for (const item of details.meals) {
+            let meal=item.meals[0];
+            if (meal.idMeal==this.idMeal) {
+                window.open(meal.strYoutube);
                 break;
             }
-            
         }
     }
 }
-
-//details.meals[i].meals[0].strCategory
