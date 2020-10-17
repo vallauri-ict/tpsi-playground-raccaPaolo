@@ -1,3 +1,3 @@
-# Es. 4_001_XMLIntroduction
+# Es. 4_002_ProveJson
 ## Obiettivo:
 Realizzare un programma Javascript dove iniziare a gestire un relativo oggetto JSON.
