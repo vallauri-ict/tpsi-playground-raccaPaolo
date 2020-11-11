@@ -1,13 +1,12 @@
 "use strict"
-
-window.onload = function(){
-
+let _wrapper;
+function evidenzia(selector) {
+    _wrapper.children().css({"backgroundColor":""});//azzero al default
+    _wrapper.children(selector).css({"backgroundColor":"#FF0"});
 }
 
-function generaNumero(min,max){
-    // formula per generare numeri tra min e max, estremi inclusi
-    // math.floor tronca il numero con la virgola all'intero più basso (approssimo per difetto)
-    let n = Math.floor((max-min+1)*Math.random())+min  
-    return n;
-}
+$(document).ready(function(){
+    _wrapper=$("#wrapper");
+
+})
 
