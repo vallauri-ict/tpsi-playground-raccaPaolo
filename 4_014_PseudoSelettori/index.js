@@ -2,18 +2,42 @@ $(document).ready( function(){
 
 	let _ris = $("#txtRis");
 		
-	$("div:not('#wrapper'), p").click( function () {	
+	$("div:not('#wrapper'), p:not('txtRis')").click( function () {	
 		_ris.empty();		
 		// Per ogni click richiamo 7 volte elabara() 
 		for(let i=1; i<=7; i++) 	
-		   elabara($(this), i);			
+		   elabora($(this), i);			
 		visualizza("-----------------------")	
 	   
-
+		//verifico se l'elemento è di tipo p
+		if($(this).is("p")){
+			visualizza("Sono un tag p");
+		}
+		if($(this).is("#blu, #rosso")){
+			visualizza(`Sono l'elemento ${$(this).html()}`);//("Sono l'elemento" + ${$(this).html());
+		}
+		/*if($(this).html().includes("my Div")){
+			visualizza("Il mio testo è my Div");
+		}*/
+		if($(this).is(":contains('my Div')")){//contiene testo
+			visualizza("Il mio testo è my Div");
+		}
+		/*if($(this).is(":has('span')")){//contiene tag
+			visualizza("Al mio interno c'è un tag span");
+		}*/
+		if($(this).html().includes("span")){//contiene tag
+			visualizza("Al mio interno c'è un tag span");
+		}
+		if($(this).is(":last-child")){//contiene tag
+			visualizza("Sono l'ultimo figlio di wrapper");
+		}
+		if($(this).is(":last-of-type")){//contiene tag
+			visualizza("Sono l'ultimo elemento del mio tipo in wrapper");
+		}
 	});
 
 
-	function elabara(box, i){
+	function elabora(box, i){
 		// 1 - i-esimo elemento generico 	
 		if(box.is(`:nth-child(${i})`))
 			visualizza(`nth-child(${i})`);
