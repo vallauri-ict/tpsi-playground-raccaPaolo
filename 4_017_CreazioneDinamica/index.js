@@ -1,9 +1,10 @@
 "use strict"
 
 let _ul=[];
+let _wrapper;
 
 $(document).ready(function(){
-    let _wrapper = $("#wrapper");
+    _wrapper = $("#wrapper");
     _ul.push(_wrapper.children("ul").first());//puntatore jquery al primo dei due ul
     _ul.push(_wrapper.children("ul").eq(1));
 })
@@ -48,6 +49,25 @@ function replica(index){
     _ul[index].children("li").before(_li);
 }
 
+function creazioneConCostruttore(){
+    $("<div>", {
+            "css": { // metodo jQuery
+            "background-color": "#ddd",
+            "color": "blue"
+            },
+            "text": "hello world", // metodo jQuery
+            "appendTo": _wrapper,
+            "append": [ // le parentesi quadre consentono di appendere più elementi allo stesso tempo
+                $("<br>"),
+                $("<label>", { "text": "hobbies" } ),
+                $("<input>", { "type": "radio", "name": "hobbies"}),
+                $("<span>", {"text": "sports"}),
+                $("<input>", { "type": "radio", "name": "hobbies"}),
+                $("<span>", {"text": "musica"})
+            ]
+        }
+    )
+}
 
 
 //#endregion
