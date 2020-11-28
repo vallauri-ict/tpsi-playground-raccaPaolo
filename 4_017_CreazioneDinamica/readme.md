@@ -1,3 +1,5 @@
-# Racca Paolo
-## Classe 3B Informatica, A.S. 2019/2020, I.I.S. "G. Vallauri"
-### Repository per esercizi Javascript
+# Es. 4_017_CreazioneDinamica
+## Obiettivo:
+Seguendo il codice *Html*, realizzare lo script utilizzando *Javascript* e ***JQuery*** e creare dinamicamente gli elementi del **DOM**.
+
+*Racca Paolo*
