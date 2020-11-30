@@ -1,3 +1,5 @@
-# Racca Paolo
-## Classe 3B Informatica, A.S. 2019/2020, I.I.S. "G. Vallauri"
-### Repository per esercizi Javascript
+# Es. 4_015_ScansioneElementi
+## Obiettivo:
+Realizzare uno script *Javascript* dove, utilizzando ***JQuery***, accedere ai vari elementi del **DOM** e, in determinati casi, modificarli come indicato nel file *HTML*.
+
+*Racca Paolo*
