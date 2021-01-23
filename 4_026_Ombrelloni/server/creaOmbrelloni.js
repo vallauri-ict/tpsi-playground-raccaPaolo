@@ -21,12 +21,8 @@ $(document).ready(function(){
 		ombrelloni.push(ombrellone);
 	}
 	
-	
-	$("<a>").prop({"download":"ombrelloni.json", "href":"#"}).text("salva json su disco")
-	.appendTo(wrapper).on("click", function(){
-		let json = {"utenti":utenti, "ombrelloni":ombrelloni}
-		json = JSON.stringify(json, null, 3)//3° parametro indica la formattazione del json, ad ogni voce va a capo e indenta di 3 spazi
-		let blob = new Blob([json], {type : 'application/json'});
-		$(this).prop("href", URL.createObjectURL(blob));
-	})
+	let json = {"utenti":utenti, "ombrelloni":ombrelloni};
+	json = JSON.stringify(json, null, 3);//3° parametro indica la formattazione del json, ad ogni voce va a capo e indenta di 3 spazi
+	let blob = new Blob([json], {type : 'application/json'});
+	$("a").prop("href", URL.createObjectURL(blob));
 })
