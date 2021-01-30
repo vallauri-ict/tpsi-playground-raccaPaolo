@@ -1,11 +1,28 @@
 "use strict";
 
-function inviaRichiesta(url) {
+/*function inviaRichiesta(url) {
     return $.ajax({
         "url": url,
 		"data": "",
 		"type": "GET",        // default
 		"contentType": "application/x-www-form-urlencoded;charset=utf-8", // default
+        "dataType": "json",   // default      
+        "timeout": 5000,      // default 
+    });	
+}*/
+function inviaRichiesta(method, url, parameters={}) {
+	let contentType;
+	if(method.toUpperCase()=="GET")
+		contentType="application/x-www-form-urlencoded;charset=utf-8";
+	else{
+		contentType = "application/json; charset=utf-8"
+        parameters = JSON.stringify(parameters);
+	}
+    return $.ajax({
+        "url": url,
+		"data": parameters,
+		"type": method,   
+		"contentType": contentType, 
         "dataType": "json",   // default      
         "timeout": 5000,      // default 
     });	

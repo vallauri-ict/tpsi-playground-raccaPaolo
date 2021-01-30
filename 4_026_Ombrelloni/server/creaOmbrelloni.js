@@ -23,6 +23,7 @@ $(document).ready(function(){
 	
 	let json = {"utenti":utenti, "ombrelloni":ombrelloni};
 	json = JSON.stringify(json, null, 3);//3° parametro indica la formattazione del json, ad ogni voce va a capo e indenta di 3 spazi
+	//crea oggetto blob, file temporaneo
 	let blob = new Blob([json], {type : 'application/json'});
-	$("a").prop("href", URL.createObjectURL(blob));
+	$("a").prop("href", URL.createObjectURL(blob));//restituisce indirizzo del file temporaneo
 })
