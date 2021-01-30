@@ -112,10 +112,16 @@ $(document).ready(function(){
 				request.done(function(data){
 					console.log(data);
 				})
+				sleep();//per evitare sovraccarico di json-server
 			}
 			alert("Prenotazione eseguita correttamente");
 			window.location.reload(); // refresh della pagina
 		})
+	}
+
+	function sleep(){
+		let now = new Date().getTime();
+		while(new Date().getTime()<now+(300));
 	}
 
 	let prenotazioni=[];
@@ -135,6 +141,51 @@ $(document).ready(function(){
 		console.log(prenotazioni);
 	}
 	console.log(prenotazioni);
+
+	let _login = $("#login")
+	let _btn = _login.children("div").eq(2).children("div").eq(1)
+
+	_wrapper.hide();
+    _btn.on("click", function(){
+		let _user = _login.find("input").eq(0)
+		let _pwd = _login.find("input").eq(1)
+		
+
+		if(_user.val()=="" || _pwd.val()==""){
+			alert ("attenzione campi non compilati")
+		}
+		else{
+			let user = _user.val();
+			let pwd=_pwd.val();
+			const url = `http://localhost:3000/utenti?nome=${user}`
+			let rq = inviaRichiesta("GET", url);
+			rq.fail(errore)
+			rq.done(function(data){	
+				console.log(data);
+				if(data.length==0){
+					alert("Inserire un utente valido");
+					window.location.reload(); // refresh della pagina
+				}
+				else{
+					if(data[0].password!=_pwd.val()){
+						alert("Password errata");
+						window.location.reload(); // refresh della pagina
+					}
+					else{
+						_wrapper.show();
+						alert("Benvenuto!");
+						_login.hide();
+						$("body").css({"backgroundColor":"#FFF"})
+						$("h1").css({
+							"text-align": "center",
+							"margin": 20,
+							"color":"black"
+						})
+					}
+				}
+			})	
+		}
+	})
 })
 
 

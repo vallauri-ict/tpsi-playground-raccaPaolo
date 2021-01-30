@@ -39,7 +39,7 @@ body{
 }
 
 #login div div:first-of-type{
-	background-image:url(icons.png);
+	background-image:url("img/icons.png");
 	width:16px;
 	height:16px;
 	vertical-align:middle;
