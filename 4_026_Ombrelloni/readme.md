@@ -58,4 +58,7 @@ ajax, richiede al server l’elenco degli utenti registrati. Verifica quindi le 
 - In caso di credenziali non valide visualizza una label di errore e, dopo 1 sec, esegue il refresh della pag
 - In caso di credenziali valide nasconde il wrapper di login e visualizza il precedente wrapper principale.
 
+## Commenti personali
+Per la prima volta abbiamo utilizzato le **promise** e la funzione **PATCH** di JsonServer, mostrando un primo esempio di come effettivamente andremo a lavorare con i server, in questo caso simulato da ***json-server***.
+
 *Racca Paolo*
