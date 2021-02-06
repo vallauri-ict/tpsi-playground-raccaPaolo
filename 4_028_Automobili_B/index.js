@@ -42,7 +42,8 @@ $(document).ready(function () {
     let _lstMarche = $("#lstMarche");
     let _lstModelli = $("#lstModelli");
 	let _table= $("table")
-	let _dettagli=$(".row").eq(2).children("div").eq(1)
+    let _dettagli=$(".row").eq(2).children("div").eq(1)
+    let idModelloSelezionato;
     
     _dettagli.hide()
     let request = inviaRichiesta("get",URL+"/marche");//get no parametri
@@ -67,7 +68,7 @@ $(document).ready(function () {
                 let _opt = $("<option>");
                 _opt.val(item.id);
                 _opt.html(item.nome+" - "+item.alimentazione);
-                _opt.prop("modello",item);
+                //_opt.prop("modello",item);
                 _opt.appendTo(_lstModelli);
                 }
                 _lstModelli.prop("selectedIndex",-1);
@@ -75,8 +76,9 @@ $(document).ready(function () {
     });
     _lstModelli.on("change",function(){
         _table.empty();
-        let selectedOpt=$("#lstModelli option").eq(_lstModelli.prop("selectedIndex"));
-        $(this).prop("modello",selectedOpt.prop("modello"));//salva nel lst le informazioni relative al modello selezionato
+        idModelloSelezionato=_lstModelli.val();//salvo id del modello selezionato
+        /*let selectedOpt=$("#lstModelli option").eq(_lstModelli.prop("selectedIndex"));
+        $(this).prop("modello",selectedOpt.prop("modello"));//salva nel lst le informazioni relative al modello selezionato*/
         let codModello =_lstModelli.val();
         let request = inviaRichiesta("get",URL+"/automobili?codModello="+codModello);
         request.fail(errore);
@@ -145,14 +147,19 @@ $(document).ready(function () {
         _dettagli.show();
         //console.log($(this).prop("automobile"))
         $("#txtId").val($(this).prop("automobile").id);
-        $("#txtNome").val(jsonModello.nome);
-        $("#txtAlimentazione").val(jsonModello.alimentazione);
-        $("#txtCilindrata").val(jsonModello.cilindrata);
         $("#txtTarga").val($(this).prop("automobile").targa);
         $("#txtColore").val($(this).prop("automobile").colore);
         $("#txtAnno").val($(this).prop("automobile").anno);
         $("#txtKm").val($(this).prop("automobile").km);
         $("#txtPrezzo").val($(this).prop("automobile").prezzo);
+        let url = URL+"/modello"+idModelloSelezionato;
+        let request = inviaRichiesta("get",url);
+        request.fail(errore);
+        request.done(function(data){
+            $("#txtNome").val(data.nome);
+            $("#txtAlimentazione").val(data.alimentazione);
+            $("#txtCilindrata").val(data.cilindrata);
+        })
     }	
 
     function elimina(){
