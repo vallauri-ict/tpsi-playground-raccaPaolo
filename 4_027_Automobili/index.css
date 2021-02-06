@@ -10,6 +10,7 @@ table thead tr{
 	background-color:#aaa;
 	color:white;
 	text-align:center;
+	height: 10px;
 }
 table tbody tr td{
 	text-align:center;
