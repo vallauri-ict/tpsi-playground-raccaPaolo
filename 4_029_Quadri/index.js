@@ -24,11 +24,15 @@ $(function () {
             _radio.prop("artista",artista);
             _radio.prop("name","optArtisti");
             _label.append(artista.name);
+            
             //_label.html(`${_label.html()} ${artista.name}`);//DA EVITARE PER ERRORI SU PROP
         }
+        
         let n = generaNumero(0,artisti.length-1);
+
         let _selRadio=$("input[type='radio']").eq(n);
         _selRadio.prop("checked", true);
+        _wrapperAdd.children("h1").html(`Inserisci un nuovo quadro di ${_selRadio.prop("artista").name}`);
         let idArtista=_selRadio.prop("artista").id;
         inviaRichiestaQuadro(idArtista,_selRadio.prop("artista").gender);
     });
@@ -40,6 +44,7 @@ $(function () {
         numeroQuadro=0;
         let id = $(this).prop("artista").id;
         let gender = $(this).prop("artista").gender;
+        _wrapperAdd.children("h1").html(`Inserisci un nuovo quadro di ${$("input[type='radio']:checked").prop("artista").name}`);
         inviaRichiestaQuadro(id,gender);
     });
 
@@ -60,30 +65,31 @@ $(function () {
         let _p=$("<p>").html(`Like: ${quadriArtista.nLike}`).appendTo(_info);
         let _imgLike = $("<img>").prop("src","like.jpg").addClass("like").appendTo(_p);
         _imgLike.on("click",function(){
-            let request= inviaRichiesta("patch",URL+"/quadri/"+quadriArtista.id,{
-                "nLike":quadriArtista[numeroQuadro].nLike+1
+            let request= inviaRichiesta("patch", URL +"/quadri/"+quadriArtista.id,{
+                
+                "nLike":elencoQuadri[numeroQuadro].nLike+1
             });
             request.error(errore);
             //corregggere
-            request.done(visualizzaQuadro(elencoQuadri[numeroQuadro],$("input[type='radio']:checked").prop("artista").gender));
+            request.done(function(quadro){
+                elencoQuadri[numeroQuadro].nLike= elencoQuadri[numeroQuadro].nLike+1;
+                visualizzaQuadro(elencoQuadri[numeroQuadro],$("input[type='radio']:checked").prop("artista").gender)});
         })
         if(quadriArtista.img.includes("base64,")){
-            $("<img>").prop("src",+quadriArtista.img).appendTo(_img);
+            $("<img>").prop("src",quadriArtista.img).appendTo(_img);
         }
         else{
             $("<img>").prop("src","img/"+quadriArtista.img).appendTo(_img);
         }
 
     }
-    ///todo sistemare
     _btnNext.on("click",function(){
         _btnPrev.prop("disabled",false);
         numeroQuadro++;
-        visualizzaQuadro(elencoQuadri[numeroQuadro],$("input[type='radio']:checked").prop("artista").gender);
         if(numeroQuadro==elencoQuadri.length-1){
             $(this).prop("disabled",true);
         }
-
+        visualizzaQuadro(elencoQuadri[numeroQuadro],$("input[type='radio']:checked").prop("artista").gender);
     });
     _btnPrev.on("click",function(){
         _btnNext.prop("disabled",false);
@@ -91,9 +97,43 @@ $(function () {
         if(numeroQuadro==0){
             $(this).prop("disabled",true);
         }
-        else{
-            visualizzaQuadro(elencoQuadri[numeroQuadro],$("input[type='radio']:checked").prop("artista").gender);
-        }
+        visualizzaQuadro(elencoQuadri[numeroQuadro],$("input[type='radio']:checked").prop("artista").gender);
+        
 
     });
+
+    let _btnSalva=$("#btnSalva");
+    let _txtImg=$("#immagine");
+    let _txtTitolo=$("#titolo");
+    let _btnAnnulla=$("#btnAnnulla");
+
+    _btnSalva.on("click",function(){
+        if(_txtTitolo.val()==="" || _txtImg.prop("files"==="")){
+            alert("Compilare correttamente i campi");
+        }
+        else{
+            let fileName = _txtImg.prop("files")[0];//sempre array, per più file mettere in html multiple
+            let reader = new FileReader();
+            reader.readAsDataURL(fileName);//metodo asincrono al cui termine richiama evento onloadend
+            reader.onloadend = function() {
+                console.log('RESULT', reader.result);
+                let codArtista=$("input[type='radio']:checked").prop("artista").id;
+                let jsonAus ={
+                    //se non passo  id, json-server lo mette in automatico a +1 dal maggiore
+                    "artist": codArtista,
+                    "title": _txtTitolo.val(),
+                    "img": reader.result,
+                    "nLike": 0
+                };
+                let request=inviaRichiesta("post", URL +"/quadri",jsonAus);
+                request.error(errore);
+                request.done(function(data){
+                    console.log(data);
+                    alert("Quadro aggiunto correttamente");
+                    inviaRichiestaQuadro(codArtista);
+                })
+            }
+            
+        }
+    })
 })
