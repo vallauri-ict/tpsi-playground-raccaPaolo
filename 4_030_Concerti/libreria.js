@@ -1,5 +1,5 @@
 "use strict";
-
+const URL = "http://localhost:3000"
 function inviaRichiesta(method, url, parameters={}) {
 	let contentType;
 	if(method.toUpperCase()=="GET")
@@ -8,8 +8,9 @@ function inviaRichiesta(method, url, parameters={}) {
 		contentType = "application/json; charset=utf-8"
         parameters = JSON.stringify(parameters);
 	}
+    //restituisce promise, gestisce chiamata in modo asincrono
     return $.ajax({
-        "url": url,
+        "url": URL + url,
 		"data": parameters,
 		"type": method,   
 		"contentType": contentType, 
