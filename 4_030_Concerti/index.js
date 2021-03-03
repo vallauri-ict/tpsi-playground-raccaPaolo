@@ -87,6 +87,7 @@ $(document).ready(function () {
         request.done(visualizzaConcerti);
     }
     function visualizzaConcerti(concerti){
+        _divDettagli.hide();
         _tbody.empty();
         for (const item of concerti) {
             let _tr= $("<tr>");
@@ -132,15 +133,43 @@ $(document).ready(function () {
             _buttonDettagli.html("Dettagli");
             _buttonDettagli.appendTo(_td);
             _buttonDettagli.addClass("btn btn-info btn-xs");
+            
+            _buttonDettagli.on("click", function(){
+                let stringa = item.postiOccupati==undefined?"\nPosti occupati: 0":"\nPosti occupati: "+item.postiOccupati;
+                _divDettagli.show();
+                _divDettagli.children("textarea").text(item.dettagli+stringa);
+            })
             _td.appendTo(_tr);
             _td=$("<td>");
             let _buttonPrenota = $("<button>");
+            _buttonPrenota.prop("postiOccupati",item.postiOccupati);//se non esiste mette undefined, senno mette valore precedente
             _buttonPrenota.html("Prenota");
-            _buttonPrenota.appendTo(_tr)
+            _buttonPrenota.appendTo(_td);
             _buttonPrenota.addClass("btn btn-success btn-xs");
+
             _td.appendTo(_tr);
         }
     }
+
+    _tbody.on("click", "button.btn-success",function () {
+        // funziona let id = $("tbody tr").eq($("button.btn-success").index($(this))).children("td").eq(0).text();
+        let id = $(this).parent().siblings().first().text();
+        let nPosti= parseInt($(this).parent().siblings().eq(6).text());
+        let postiOccupati=$(this).prop("postiOccupati")==undefined?1:parseInt($(this).prop("postiOccupati"))+1;
+        //alert(id);
+        if(postiOccupati>nPosti){
+            alert("Biglietti terminati!")
+        }
+        else{
+            let request = inviaRichiesta("patch",`/concerti/${id}`,{"postiOccupati": postiOccupati});
+            request.fail(errore);
+            request.done(function (infoData) {
+                console.log(infoData);
+                alert("Prenotazione effettuata");
+                caricaTabella();
+            });
+        }
+    });
     //#endregion
 
 })
