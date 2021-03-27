@@ -11,8 +11,9 @@ const params = {
 	"size":"800x600",	
 	// maptype viene aggiunto dopo  manualmente
 	"markers":"color:blue|size:big|label:V|44.5557763,7.7347183",
-	"heading":"center",
-	"pitch":7
+	"heading":"-60",
+	"pitch":"7",
+	"fov":"45",
 }
 const mapType = ['roadmap', 'satellite', 'hybrid', 'terrain', 'streetview'];
 
@@ -26,9 +27,12 @@ window.onload = function () {
 		_btn.html(item);
 		_btn.appendTo(btnBox);
 		_btn.on("click",visualizzaMappa);
+		
 	}
-
+	$("button").eq(0).trigger("click");
 	function visualizzaMappa(){
+		$("button").removeClass("active");
+		$(this).addClass("active");
 		imgBox.empty();
 		let url;
 		if($(this).html()!="streetview"){
