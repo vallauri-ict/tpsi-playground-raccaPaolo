@@ -42,8 +42,16 @@ $(document).ready(function(){
 
 	
 	function visualizzaPercorso(start,arrive){
+		let renderOptions = {
+				polylineOptions: {
+				strokeColor : "rgb (A, A, A)",
+				strokeWeight : 6,
+				zIndex : 100
+				}
+			}
+			
 		let directionsService = new google.maps.DirectionsService();
-		let directionsRenderer = new google.maps.DirectionsRenderer();
+		let directionsRenderer ;
 		let params={"origin":start,"destination":arrive,"travelMode":google.maps.TravelMode.DRIVING};//driving default
 		
 		directionsService.route(params,function(routes,status){
@@ -58,6 +66,27 @@ $(document).ready(function(){
 					 
 				}
 				let mappa = google.maps.Map(map,mapOptions);
+				for (let i = 0; i < routes.routes.length; i++) {
+					let color;
+					if(i==0){
+						color = "blue";
+					}
+					else{
+						color = "rgb (A, A, A)";
+					}
+					let renderOptions = {
+						polylineOptions: {
+						strokeColor : color,
+						strokeWeight : 6,
+						zIndex : 100-i
+						}
+					}
+					directionsRenderer = new google.maps.DirectionsRenderer(renderOptions);
+					directionsRenderer.setMap(mappa);
+					directionsRenderer.setRouteIndex(i);
+					directionsRenderer.setDirections(routes);
+					
+				}
 				directionsRenderer.setPanel(panel);
 				let distanza = routes.routes[0].legs[0].distance.text;
 				let tempo = routes.routes[0].legs[0].duration.text;
