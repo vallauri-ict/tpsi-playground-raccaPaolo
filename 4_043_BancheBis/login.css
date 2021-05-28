@@ -1,0 +1,12 @@
+
+
+
+/*  In bootstrap 4, invece di utilizzare la classe "alert-danger",
+    abbiamo ricolorato icona e bordino a mano tramite la seguente classe:
+*/
+
+.icona-rossa{
+	color: #dc3545;  /* colore usato da is-invalid */
+	border:1px solid #dc3545; 
+	border-right:transparent;
+}
