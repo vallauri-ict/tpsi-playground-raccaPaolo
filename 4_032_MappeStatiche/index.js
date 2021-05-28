@@ -1,7 +1,7 @@
 "use strict";
 
 const URL = "https://maps.googleapis.com/maps/api/staticmap"
-const key  = key
+const key  = "";
 
 const params = {
 	"key":key,
@@ -42,7 +42,7 @@ window.onload = function () {
 		else{
 			url = URL + "/streetview?"+setParams($(this).html());
 			url= url.replace("center","location");
-			urt += "&heading="+""
+			url += "&heading="+""
 		}
 	}
 
@@ -53,6 +53,7 @@ window.onload = function () {
 		}
 		queryString+="maptype="+mapType;
 		console.log(mapType);
+		console.log(queryString);
 		return queryString;
 	}
 }

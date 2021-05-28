@@ -8,6 +8,7 @@ $(document).ready(function(){
 			alert("Inserisci un indirizzo valido");
 		}
 		else{
+			let geocoder = new google.maps.Geocoder();
 			geocoder.geocode( {'address': address}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK)
 				disegnaMappa(results[0]);
